@@ -1,0 +1,402 @@
+@charset "UTF-8";
+/**
+ * "Yet Another Multicolumn Layout" - (X)HTML/CSS Framework
+ *
+ * (en) Uniform design of standard content elements
+ * (de) Einheitliche Standardformatierungen für die wichtigten Inhalts-Elemente
+ *
+ * @copyright       Copyright 2005-2010, Dirk Jesse
+ * @license         CC-A 2.0 (http://creativecommons.org/licenses/by/2.0/),
+ *                  YAML-C (http://www.yaml.de/en/license/license-conditions.html)
+ * @link            http://www.yaml.de
+ * @package         yaml
+ * @version         3.2.1
+ * @revision        $Revision:392 $
+ * @lastmodified    $Date:2009-07-05 12:18:40 +0200 (So, 05. Jul 2009) $
+ * @appdef yaml
+*/
+
+@media all
+{
+    /* (en) Marginal areas & page background */
+    /* (de) Randbereiche & Seitenhintergrund */
+    body {
+        padding: 0px 0;
+        border: 0;
+        font: normal small Verdana, Arial, Helvetica, sans-serif;
+        background-image: url("./../../images/side/page_bg.jpg");
+    }
+    /*-------------------------------------------------------------------------*/
+
+    /* Layout Properties | Layout-Eigenschaften */
+    .page_margins {
+        margin: 0 auto;
+        min-width: 994px;
+        max-width: 994px;
+        background: #fff;
+    }
+    .page {
+        padding: 0px;
+    }
+    .header {
+        margin: 0 ;
+        padding: 0 0 0 0;
+        height: 100px;
+        background-image:url(./../../images/side/header_bg.jpg);
+        background-repeat: repeat-x;
+    }
+    #logo {
+        height: 100px;
+        background-image:url(./../../images/side/header_logo.jpg);
+        background-repeat: no-repeat;
+    }
+    #main {
+        margin: 10px 0;
+        background: #fff;
+    }
+    #footer {
+        font-style: italic;
+        font-variant:small-caps;
+        padding-top: 6px;
+        text-align: center;
+        height: 19px;
+        background-image: url("./../../images/side/footer_bg.jpg");
+        background-repeat: repeat-x;
+    }
+    #footer a {
+        text-decoration: none;
+}
+    p,blockquote,ul,ol {
+        margin-bottom: 1.4em;
+        line-height: 1.8em;
+        text-align: justify;
+    }
+    blockquote {
+        margin-left: 2em;
+        margin-right: 2em;
+        font-style: italic;
+    }
+    /*-------------------------------------------------------------------------*/
+
+    /**
+     * (en) Formatting content container
+     * (de) Formatierung der Inhalts-Container
+     *
+    */
+
+    #main {
+        padding: 0 0 0 0;
+        background-image: url("./../../images/side/nav_bg.jpg");
+        background-repeat: repeat-y;
+    }
+    /*-------------------------------------------------------------------------*/
+    /*--- Navigation ----------------------------------------------------------*/
+    /*-------------------------------------------------------------------------*/
+    #bgTopNavImg {
+        float:left;
+        vertical-align:top;
+        overflow:hidden;
+        height: 64px;
+        width: 192px;
+        background-image: url("./../../images/side/top_nav_nav.jpg");
+        background-repeat: no-repeat;
+    }
+    #bgTopNav {
+        height: 37px;
+        border: 0;
+        background-image: url("./../../images/side/top_nav.jpg");
+        background-repeat: repeat-x;
+    }
+    #topnav {
+        padding-right: 5px;
+        padding-top: 8px;
+        font-size: 12px;
+        color: black;
+        float: right;
+    }
+    #topnav a {
+        font-size: 12px;
+        text-decoration: none;
+        color: black;
+    }
+    #topnavURL {
+        margin: 0 5px 12px 0;
+        vertical-align:bottom;
+        float:left;
+    }
+    #langURL {
+        margin-left: 1px;
+        margin-right: 1px;
+        vertical-align:bottom;
+        float:left;
+    }
+    /* ----------------------------- */
+    /* ----- Search ---------------- */
+    #search {
+        float: right;
+        margin: 0 3px 0 0;
+        position: relative;
+        top: 75px;
+    }
+    #search input {
+        background-color: inherit;
+        /*border-bottom-color: yellow;*/
+    }
+    .topSearchGo {
+        background-image: url("./../../images/menu_bgr.gif");
+    }
+    .searchSearch {
+        padding: 0 0 2px 0;
+        font-size: 12px;
+        line-height: 1.8em;
+        text-align: justify;
+        list-style:none;
+        color: black;
+        position:relative;
+        margin: 0 3px 0 0;
+        border-bottom-color: black;
+    }
+    .searchSearch input {
+        height: 20px;
+        border-style: none;
+        vertical-align:bottom;
+        background-color: #A2B5CD;
+    }
+    .searchSearch select {
+        height: 20px;
+        border-style: none;
+        vertical-align:bottom;
+        background-color: #A2B5CD;
+    }
+
+    .searchAmount {
+        padding-left: 5px;
+        padding-right: 5px;
+        font-size: 12px;
+        line-height: 1.8em;
+        text-align: justify;
+        list-style:none;
+        color: black;
+        position:relative;
+    }
+    .searchAmount h1 {
+        line-height: 1.8em;
+        margin: 3px;
+        padding: 5px 3px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+    .contentBoxAmount {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .box{
+        /*
+        border: 1px;
+        border-style: solid;
+        border-color: gray;
+        */
+        /*background-image: url("./../../images/bg_body.jpg");*/
+    }
+    /*-------------------------------------------------------------------------*/
+    .Navigation {
+        width: 192px;
+        margin: 0px;
+        padding: 0 0 2px 0;
+        font-size: 12px;
+        line-height: 1.8em;
+        text-align: justify;
+        list-style:none;
+        color: black;
+        position:relative;
+    }
+
+    .Navigation a {
+        font-size: 12px;
+        text-decoration: none;
+        color: black;
+    }
+    .Navigation a:hover {
+        font-size: 12px;
+        text-decoration: none;
+    }
+    .Navigation li {
+        line-height: 1.0em;
+        margin: 1px 0 0 0;
+        padding: 0 0 0 30px;
+        color: black;
+        text-decoration: none;
+    }
+
+    .Navigation li:hover {
+        color: black;
+    }
+    .Navigation h1 {
+        height: 19px;
+        width: 150px;
+        line-height: 1.8em;
+        margin: 0px;
+        padding: 0 0 0 30px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 11px;
+        text-transform: uppercase;
+        color: black;
+        background-image: url("./../../images/side/nav_h1_bg.jpg");
+        background-repeat: repeat-x;
+    }
+    /*sublinks*/
+    /*
+.NavigationSub {
+    height: 12px;
+        display: none;
+        line-height: 1.0em;
+        list-style: none;
+        margin: 1px 0 0 0;
+        padding: 3px 5px;
+        color: black;
+        text-decoration: none;
+        font-family: sans-serif;
+        font-size: 10px;
+        font-style: italic;
+        font-variant:small-caps;
+        background-image: url("./../../images/menu_bgr.gif");
+        background-repeat: no-repeat;
+}
+    */
+    .NavigationSub a {
+        /*
+        line-height: 1.0em;
+        list-style: none;
+        margin: 1px 0 0 0;
+        padding: 15px 5px;
+        */
+        color: black;
+        text-decoration: none;
+        font-family: sans-serif;
+        font-size: 11px;
+        font-style: italic;
+        font-variant:small-caps;
+    }
+    .NavigationSub a:hover {
+        line-height: 1.0em;
+        /*list-style: none;*/
+        margin: 1px 0 0 0;
+        padding: 3px 5px;
+        color: black;
+        /*text-decoration: none;*/
+        font-family: sans-serif;
+        font-size: 11px;
+        font-style: italic;
+        font-variant:small-caps;
+    }
+    .NavigationSub li {
+        line-height: 1.0em;
+        list-style: none;
+        margin: 1px 0 0 0;
+        padding: 3px 5px;
+        color: black;
+        text-decoration: none;
+        font-family: sans-serif;
+        font-size: 10px;
+        font-style: italic;
+        font-variant:small-caps;
+        /*
+        background-image: url("./../../images/menu_bgr.gif");
+        background-repeat: no-repeat;
+        */
+    }
+    /*
+.NavigationSub li:hover {
+     text-decoration: underline;
+    color: black;
+    background-image: url("./../../images/menu_over.gif");
+    background-repeat: no-repeat;
+}
+    */
+    #linkActive {
+        color: black;
+        font-style: oblique;
+        padding-left: 15px;
+        background-image: url("./../../images/side/nav_h1_bg.jpg");
+        background-repeat: no-repeat;
+
+    }
+    /*-------------------------------------------------------------------------*/
+    /*--- boxen ---------------------------------------------------------------*/
+    /*-------------------------------------------------------------------------*/
+    #lay_left {
+        /*
+        border: 1px;
+        border-color: gray;
+        border-style: solid;
+        */
+        float:left;
+        width: 192px;
+        vertical-align:top;
+        overflow:hidden;
+        padding: 0px 0px 10px 10px;
+
+    }
+    #lay_cont {
+        float:none;
+        font-family:Verdana, Sans-Serif, Arial;
+        font: normal small Verdana, Arial, Helvetica, sans-serif;
+        width: auto;
+        vertical-align:top;
+        overflow:hidden;
+        margin: 0 auto;
+        padding: 0px 10px 10px 10px;
+        /*background-image: url("./../../images/bg_body.jpg");*/
+    }
+    #lay_cont a {
+        text-decoration: underline;
+        color: black;
+    }
+
+    #lay_cont a:hover {
+        color: black;
+        text-decoration: underline;
+    }
+    #lay_rigth {
+        /*
+        width: 170px;
+        vertical-align:top;
+        overflow:hidden;
+        */
+    }
+    .maintable {
+        width:100%;
+        /*
+        background: url("./../../images/bg_body.gif");
+        background: #f9f9f9;
+        background-image: url("./../../images/bg_con.jpg");*/
+
+    }
+    .maintable tr {
+        border:0px solid #000;
+        vertical-align:top;
+        overflow:hidden;
+    }
+    .contentBox {
+        margin: 0 2px 0 0;
+        padding: 0 0 0 0;
+        font-size: 12px;
+        line-height: 1.8em;
+        text-align: justify;
+        color: black;
+    }
+    .contentBox h1 {
+        height: 15px;
+        line-height: 1.8em;
+        margin: 0px;
+        padding: 0 0 0 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 11px;
+        text-transform: uppercase;
+        color: black;
+    }
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<portal>
+    <permission_box_new>Darf neue Boxen anlegen</permission_box_new>
+    <permission_box_edit>Darf Boxen editieren</permission_box_edit>
+    <permission_side_new>Darf neue Seiten anlegen</permission_side_new>
+    <permission_side_edit>Darf Seiten editieren</permission_side_edit>
+    <permission_news_new>Darf News anlegen</permission_news_new>
+    <permission_news_edit>Darf News bearbeiten</permission_news_edit>
+    <sideName>Seiten Titel</sideName>
+    <mainSide>Hauptseite</mainSide>
+    <htmlSide>HTML Seite</htmlSide>
+    <underSide>Unterseite von</underSide>
+    <sideContent>Seiten Inhalt</sideContent>
+    <sideLinkName>Linkname</sideLinkName>
+    <mainmenue>Hauptmenue</mainmenue>
+
+
+    <menueWriteNews>News schreiben</menueWriteNews>
+    <newsSystemAddNew>Neue News Meldung anlegen</newsSystemAddNew>
+    <newsEditNews>News Meldung editieren</newsEditNews>
+
+    <adminBoxAdd>Neue Box anlegen</adminBoxAdd>
+    <adminBoxEdit><![CDATA[<img src="module/admin/template/images/iconset/Modify.png" />]]></adminBoxEdit>
+    <adminBoxTitel>Box Titel</adminBoxTitel>
+    <adminBoxContent>Box Content</adminBoxContent>
+    <adminBoxStatus>Status</adminBoxStatus>
+    <adminBoxPos>R/L</adminBoxPos>
+    <adminBoxDel><![CDATA[<img src="module/admin/template/images/iconset/Cancel.png" />]]></adminBoxDel>
+    <adminBoxEdit><![CDATA[<img src="module/admin/template/images/iconset/Modify.png" />]]></adminBoxEdit>
+
+    <adminCMSSideEdit>CMS Seite Bearbeiten</adminCMSSideEdit>
+    <adminCMSNewSide>CMS Seite anlegen</adminCMSNewSide>
+
+    <adminNewsEdit>NewsSystem News Bearbeiten</adminNewsEdit>
+
+    <mainsettings>Einstellungen</mainsettings>
+
+    <rssActive>RSS System</rssActive>
+    <newsActive>News System</newsActive>
+    <domainActive>Domain System</domainActive>
+
+    <buttonNewSideSave>Seite anlegen</buttonNewSideSave>
+    <buttonSaveSettings>Einstellungen Sichern</buttonSaveSettings>
+
+    <confirmDelSide>Achtung, moechten Sie diese Seite wircklich loeschen ?</confirmDelSide>
+    <confirmDelBox>Achtung, moechten Sie diese Box wircklich loeschen ?</confirmDelBox>
+
+    <imgNewActiv>module/admin/template/images/iconset/OK.png</imgNewActiv>
+    <imgNewInactiv>module/admin/template/images/iconset/No.png</imgNewInactiv>
+    <imgNewsDel>module/admin/template/images/iconset/Cancel.png</imgNewsDel>
+    <imgNewsEdit>module/admin/template/images/iconset/Modify.png</imgNewsEdit>
+
+    <imgRSSActive>module/admin/template/images/iconset/OK.png</imgRSSActive>
+    <imgRSSInactive>module/admin/template/images/iconset/No.png</imgRSSInactive>
+
+    <imgNewsActive>module/admin/template/images/iconset/OK.png</imgNewsActive>
+    <imgNewsInactive>module/admin/template/images/iconset/No.png</imgNewsInactive>
+    
+    <imgDomainActive>module/admin/template/images/iconset/OK.png</imgDomainActive>
+    <imgDomainInactive>module/admin/template/images/iconset/No.png</imgDomainInactive>
+
+    <imgBoxActive>module/admin/template/images/iconset/OK.png</imgBoxActive>
+    <imgBoxInactive>module/admin/template/images/iconset/No.png</imgBoxInactive>
+
+    <imgBoxL>./module/admin/template/images/iconset/shape_align_left.png</imgBoxL>
+    <imgBoxR>./module/admin/template/images/iconset/shape_align_right.png</imgBoxR>
+</portal>
