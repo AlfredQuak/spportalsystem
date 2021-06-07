@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  php-httpd:
+    build:
+      context: dockerExternal/php-dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - "./src:/var/www/html"
+
+  mariadb:
+    image: mariadb:10.5.2
+    volumes:
+      - mariadb-volume:/var/lib/mysql
+    environment:
+      TZ: "Europe/Berlin"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+      MYSQL_ROOT_PASSWORD: "dev"
+      MYSQL_USER: 'dev'
+      MYSQL_PASSWORD: 'dev'
+      MYSQL_DATABASE: 'dev'
+
+volumes:
+  mariadb-volume:

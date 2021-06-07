@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<admin>
+    <permission_modul_settings>Darf Module installieren oder deinstallieren</permission_modul_settings>
+    <permission_permission_setting>Darf auf die Rechteverwaltung zugreifen</permission_permission_setting>
+    <permission_system_settings>Darf Globale Systemsettings verwalten</permission_system_settings>
+    <valueName>Name</valueName>
+    <valuePassword>Passwort</valuePassword>
+    <version>Version dev 0.9a</version>
+    <versionLegal>2013</versionLegal>
+
+    <value_name>Gruppen Name : </value_name>
+    <TboxAdminCenterLogin>Admin Center Login</TboxAdminCenterLogin>
+    <TboxLoginSucessfull>Login erfolgreich</TboxLoginSucessfull>
+    <CboxLoginSucessfull>Login erfolgreich</CboxLoginSucessfull>
+    <TboxSystemSettings>System Settings</TboxSystemSettings>
+    <TboxModulInstall>Modul Installieren</TboxModulInstall>
+    <TboxModulActivate>Modul aktivieren</TboxModulActivate>
+    <TboxModulSetStartModul>Start Modul auswählen</TboxModulSetStartModul>
+
+    <TmenuModulSettings>Modul Settings</TmenuModulSettings>
+    <CmenuModulDeInstall>Modul De/In-stallieren</CmenuModulDeInstall>
+    <CmenuModulActivate>Modul aktivieren</CmenuModulActivate>
+    <CmenuModulSettStartModul>Start Modul einstellen</CmenuModulSettStartModul>
+
+    <TmenuSystemSettings>System Settings</TmenuSystemSettings>
+    <CmenuSystemSettings>Einstellungen</CmenuSystemSettings>
+    <CmenuSystemLogout>Ausloggen</CmenuSystemLogout>
+
+    <TmenuUserManagemant>RechteSystem</TmenuUserManagemant>
+    <CmenuSystemGroupAdd>Gruppe anlegen</CmenuSystemGroupAdd>
+    <CmenuSystemGroupEdit>Gruppen bearbeiten</CmenuSystemGroupEdit>
+    <CmenuSystemGroupUser>Nutzerrechte</CmenuSystemGroupUser>
+    <CmenuSystemUserAdd>User anlegen</CmenuSystemUserAdd>
+
+    <perFullName>Name</perFullName>
+    <perUserEnable>Aktiv</perUserEnable>
+    <perUserName>Username</perUserName>
+    <perUserGroup>Gruppe</perUserGroup>
+
+    <startModul>Dieses Modul soll als Start Modul laufen</startModul>
+
+    <modulInstall>Installieren</modulInstall>
+    <modulDeinstall>Deinstalieren</modulDeinstall>
+    <modulName>Modul Name</modulName>
+    <modulActiv>Aktivieren</modulActiv>
+    <modulInactiv>Deaktivieren</modulInactiv>
+
+    <buttonSave>Speichern</buttonSave>
+    <buttonSend>Senden</buttonSend>
+    <buttonLogin>Einloggen</buttonLogin>
+
+    <imgOk>template/images/ok.gif</imgOk>
+    <imgDelete>template/images/topic_delete.gif</imgDelete>
+    <imgActiv>template/images/topic_unlock.gif</imgActiv>
+    <imgInactiv>template/images/topic_lock.gif</imgInactiv>
+
+    <imgStartModul>./module/admin/template/images/iconset/world.png</imgStartModul>
+    <imgModulSetActiv>./module/admin/template/images/iconset/plugin.png</imgModulSetActiv>
+    <imgModulInstall>./module/admin/template/images/iconset/database.png</imgModulInstall>
+</admin>
