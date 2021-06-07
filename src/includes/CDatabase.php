@@ -1,44 +1,15 @@
 <?php
 
-/* spPortalSystem CDatabase.php
- * Created on 19.05.2009 from misterice
- *
- * spPortalSystem was written by Daniel Stecker 2009
- * please visit my website www.sploindy.de
- *
- * This file is part of spPortalSystem.
- * spPortalSystem is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or any later version.
- *
- * spPortalSystem is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-
 namespace spCore;
 
-/**
- * \author Daniel Stecker <dstecker@sploindy.de>
- * \date Oct. 2008
- * \ingroup systemcore
- * \brief
- * Wrapped for database connection
- * \details
- * Wrapped MySql database functions and give some debug functions.
- * */
-final class CDatabase {
+final class CDatabase
+{
 
-    private static $instance = null;
+    private static CDatabase $instance;
 
-    private function __clone() {
-        
+    private function __clone()
+    {
+
     }
 
     private $connection = null;
@@ -48,8 +19,9 @@ final class CDatabase {
      * @param $g_system
      * @return object
      */
-    public static function getInstance() {
-        if (self::$instance == null) {
+    public static function getInstance()
+    {
+        if (!isset(self::$instance)) {
             self::$instance = new CDatabase();
         }
         return self::$instance;
@@ -59,45 +31,54 @@ final class CDatabase {
      * \brief Construcor
      * \details
      * Init and connect to database
-     * */
-    public function __construct() {
+     *
+     * @throws \ErrorException
+     */
+    public function __construct()
+    {
         try {
-            $this->connection = @mysql_connect(SP_CORE_DB_SERVER, SP_CORE_DB_USER, SP_CORE_DB_PASS);
-
+            $this->connection = mysqli_connect(SP_CORE_DB_SERVER, SP_CORE_DB_USER, SP_CORE_DB_PASS);
+            $throw_ifError = static function () {
+                CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, mysqli_error());
+                throw new \ErrorException("Database Error");
+            };
             if (!$this->connection) {
-                CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, mysql_error());
-                return false;
-            } elseif (!mysql_select_db(SP_CORE_DB_DATABASE, $this->connection)) {
-                CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, mysql_error());
-                return false;
+                $throw_ifError();
+            } elseif (!mysqli_select_db(SP_CORE_DB_DATABASE, $this->connection)) {
+                $throw_ifError();
             }
-            mysql_set_charset(SP_CORE_ENCODING, $this->connection);
+            mysqli_set_charset(SP_CORE_ENCODING, $this->connection);
         } catch (Exception $e) {
             CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, $e->getMessage());
         }
     }
 
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->connection;
     }
 
-    public function fetch_array($result, $option = null) {
+    public function fetch_array($result, $option = null)
+    {
         if ($option != null) {
-            return @mysql_fetch_array($result, $option);
+            return @mysqli_fetch_array($result, $option);
         } else {
-            return @mysql_fetch_array($result);
+            return @mysqli_fetch_array($result);
         }
     }
 
-    public function fetch_object($result) {
-        return mysql_fetch_object($result);
+    public function fetch_object($result)
+    {
+        return mysqli_fetch_object($result);
     }
 
-    public function fetch_assoc($result) {
-        return mysql_fetch_assoc($result);
+    public function fetch_assoc($result)
+    {
+        return mysqli_fetch_assoc($result);
     }
 
-    public function query($query, $logging = true) {
+    public function query($query, $logging = true)
+    {
         if (SP_LOG_SQL && $logging) {
             if (function_exists("xdebug_time_index")) {
                 CLog::getInstance()->log(SP_LOG_DEBUG, SP_LOG_DEBUG, __CLASS__ . "::" . __FUNCTION__, xdebug_call_class() . "->" . xdebug_call_function() . "::Line " . xdebug_call_line(), null, $query);
@@ -106,7 +87,7 @@ final class CDatabase {
             }
         }
 
-        $result = @mysql_query($query);
+        $result = @mysqli_query($query);
         if (!$result && $logging) {
             if (function_exists("xdebug_time_index")) {
                 CLog::getInstance()->log(SP_LOG_ERROR, null, __CLASS__ . "::" . __FUNCTION__, xdebug_call_class() . "->" . xdebug_call_function() . "::Line " . xdebug_call_line(), null, $this->getError());
@@ -117,23 +98,17 @@ final class CDatabase {
         return $result;
     }
 
-    public function num_rows($result) {
-        return mysql_num_rows($result);
+    public function num_rows($result)
+    {
+        return mysqli_num_rows($result);
     }
 
-    public function checkValue($query) {
-        if (get_magic_quotes_gpc()) {
-            if (function_exists("mysql_real_escape_string")) {
-                return mysql_real_escape_string(stripslashes($query));
-            } else {
-                return $query;
-            }
+    public function checkValue($query)
+    {
+        if (function_exists("mysql_real_escape_string")) {
+            return mysqli_real_escape_string(stripslashes($query));
         } else {
-            if (function_exists("mysql_real_escape_string")) {
-                return mysql_real_escape_string($query);
-            } else {
-                return addslashes($query);
-            }
+            return $query;
         }
     }
 
@@ -141,7 +116,8 @@ final class CDatabase {
      * \brief
      * Import sql file and execute sql querys
      * */
-    public function importFile($file) {
+    public function importFile($file)
+    {
         $import = file_get_contents($file);
 
         $import = preg_replace("%/\*(.*)\*/%Us", '', $import);
@@ -167,18 +143,21 @@ final class CDatabase {
         }
     }
 
-    public function insert_id() {
-        return mysql_insert_id();
+    public function insert_id()
+    {
+        return mysqli_insert_id();
     }
 
-    public function getError() {
-        CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, "" . mysql_errno() . " : " . mysql_error());
-        return "" . mysql_errno() . " : " . mysql_error();
+    public function getError()
+    {
+        CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, "" . mysqli_errno() . " : " . mysqli_error());
+        return "" . mysqli_errno() . " : " . mysqli_error();
     }
 
-    function __destruct() {
+    function __destruct()
+    {
         if ($this->connection != null) {
-            @mysql_close($this->connection);
+            @mysqli_close($this->connection);
         }
     }
 

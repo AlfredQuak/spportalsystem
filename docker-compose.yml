@@ -4,13 +4,17 @@ services:
   php-httpd:
     build:
       context: dockerExternal/php-dockerfile
+    restart: always
     ports:
       - 80:80
     volumes:
       - "./src:/var/www/html"
+    depends_on:
+      - mariadb
 
   mariadb:
     image: mariadb:10.5.2
+    restart: always
     volumes:
       - mariadb-volume:/var/lib/mysql
     environment:
@@ -20,6 +24,16 @@ services:
       MYSQL_USER: 'dev'
       MYSQL_PASSWORD: 'dev'
       MYSQL_DATABASE: 'dev'
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 8000:80
+    environment:
+      - PMA_ARBITRARY=0
+      - PMA_HOST=mariadb
+    depends_on:
+      - mariadb
 
 volumes:
   mariadb-volume:

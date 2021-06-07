@@ -1,5 +1,7 @@
 <?php
 
+//phpinfo();
+
 const SP_PROFILE = false;
 
 if (!file_exists('config.inc.php')) {

@@ -7,11 +7,12 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y libmcrypt-dev \
     && pecl install imagick \
     && pecl install xdebug \
     && docker-php-ext-enable imagick \
-    && docker-php-ext-install pdo_mysql zip gd bz2 \
+    && docker-php-ext-install pdo_mysql mysqli zip gd bz2 \
     && docker-php-ext-install fileinfo gettext iconv xml \
     && docker-php-ext-install xmlrpc xmlwriter xsl \
     && docker-php-ext-install zip \
     && docker-php-ext-enable xdebug \
+    && docker-php-ext-enable mysqli \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
