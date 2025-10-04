@@ -1,6 +1,7 @@
 <?php
 // PHPUnit bootstrap for spPortalSystem tests
 // Sets up constants and includes required classes.
+require_once __DIR__ . '/../vendor/autoload.php';
 
 // Ensure document root and server vars exist for config.inc.php defaults
 if (!isset($_SERVER['DOCUMENT_ROOT'])) {
