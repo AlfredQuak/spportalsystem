@@ -113,7 +113,8 @@ final class CSession {
     public function startSession($userName, $userId) {
         $_SESSION['user_name'] = $userName;
         $_SESSION['user_id'] = $userId;
-        if (function_exists("xdebug_time_index")) {
+        $xdebugDevelop = function_exists('xdebug_call_class') && strpos((string)ini_get('xdebug.mode'), 'develop') !== false;
+        if ($xdebugDevelop) {
             CLog::getInstance()->log(SP_LOG_NOTICE, (
                     isset($_SESSION['user_dblvl']) ? $_SESSION['user_dblvl'] : SP_LOG_NOTICE), __CLASS__ .
                     "::" . __FUNCTION__, xdebug_call_class() . "->" . xdebug_call_function() .
@@ -141,7 +142,8 @@ final class CSession {
 
             if ($result === null) {
                 $this->deleteSession();
-                if (function_exists("xdebug_time_index")) {
+                $xdebugDevelop = function_exists('xdebug_call_class') && strpos((string)ini_get('xdebug.mode'), 'develop') !== false;
+                if ($xdebugDevelop) {
                     CLog::getInstance()->log(SP_LOG_WARNING, (
                             isset($_SESSION['user_dblvl']) ? $_SESSION['user_dblvl'] : SP_LOG_WARNING), __CLASS__ .
                             "::" . __FUNCTION__, xdebug_call_class() . "->" . xdebug_call_function() . "::Line " .
@@ -161,7 +163,8 @@ final class CSession {
                     $sql = "SELECT active FROM sp_user WHERE id=" . $_SESSION['user_id'];
                     $result = CDatabase::getInstance()->query($sql);
                     if ($result === null) {
-                        if (function_exists("xdebug_time_index")) {
+                        $xdebugDevelop = function_exists('xdebug_call_class') && strpos((string)ini_get('xdebug.mode'), 'develop') !== false;
+                        if ($xdebugDevelop) {
                             CLog::getInstance()->log(SP_LOG_WARNING, (
                                     isset($_SESSION['user_dblvl']) ? $_SESSION['user_dblvl'] : SP_LOG_WARNING), __CLASS__ .
                                     "::" . __FUNCTION__, xdebug_call_class() . "->" . xdebug_call_function() . "::Line " .
@@ -176,7 +179,8 @@ final class CSession {
                         $userData = CDatabase::getInstance()->fetch_object($result);
                         if ($userData->active == '0') {
                             $this->deleteSession();
-                            if (function_exists("xdebug_time_index")) {
+                            $xdebugDevelop = function_exists('xdebug_call_class') && strpos((string)ini_get('xdebug.mode'), 'develop') !== false;
+                            if ($xdebugDevelop) {
                                 CLog::getInstance()->log(SP_LOG_WARNING, (
                                         isset($_SESSION['user_dblvl']) ? $_SESSION['user_dblvl'] : SP_LOG_WARNING), __CLASS__ .
                                         "::" . __FUNCTION__, xdebug_call_class() . "->" . xdebug_call_function() . "::Line " .
@@ -188,7 +192,8 @@ final class CSession {
                             }
                             return false;
                         } else {
-                            if (function_exists("xdebug_time_index")) {
+                            $xdebugDevelop = function_exists('xdebug_call_class') && strpos((string)ini_get('xdebug.mode'), 'develop') !== false;
+                            if ($xdebugDevelop) {
                                 CLog::getInstance()->log(SP_LOG_NOTICE, (
                                         isset($_SESSION['user_dblvl']) ? $_SESSION['user_dblvl'] : SP_LOG_NOTICE), __CLASS__ .
                                         "::" . __FUNCTION__, xdebug_call_class() . "->" . xdebug_call_function() . "::Line " .
@@ -206,7 +211,8 @@ final class CSession {
                     CLog::getInstance()->log(SP_LOG_NOTICE, (
                             isset($_SESSION['user_dblvl']) ? $_SESSION['user_dblvl'] : SP_LOG_NOTICE), __CLASS__ .
                             "::" . __FUNCTION__, null, null, "Line: " . __LINE__ . " Session delete ...");
-                    if (function_exists("xdebug_time_index")) {
+                    $xdebugDevelop = function_exists('xdebug_call_class') && strpos((string)ini_get('xdebug.mode'), 'develop') !== false;
+                    if ($xdebugDevelop) {
                         CLog::getInstance()->log(SP_LOG_WARNING, (
                                 isset($_SESSION['user_dblvl']) ? $_SESSION['user_dblvl'] : SP_LOG_WARNING), __CLASS__ .
                                 "::" . __FUNCTION__, xdebug_call_class() . "->" . xdebug_call_function() .
@@ -220,7 +226,8 @@ final class CSession {
                 }
             }
         } else {
-            if (function_exists("xdebug_time_index")) {
+            $xdebugDevelop = function_exists('xdebug_call_class') && strpos((string)ini_get('xdebug.mode'), 'develop') !== false;
+            if ($xdebugDevelop) {
                 CLog::getInstance()->log(SP_LOG_WARNING, (
                         isset($_SESSION['user_dblvl']) ? $_SESSION['user_dblvl'] : SP_LOG_WARNING), __CLASS__ .
                         "::" . __FUNCTION__, xdebug_call_class() . "->" . xdebug_call_function() . "::Line " .

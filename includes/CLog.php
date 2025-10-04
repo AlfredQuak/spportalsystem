@@ -52,7 +52,7 @@ class CLog {
 
     protected function __construct() {
         if (SP_CORE_LOG_WEBSERVICE) {
-            self::$soapClient = new SoapClient(SP_CORE_WEBSERVICE_URL,
+            self::$soapClient = new \SoapClient(SP_CORE_WEBSERVICE_URL,
                             array("style" => SOAP_RPC, "use" => SOAP_ENCODED));
             self::$soapClientLogger = new WriteLog();
         }
@@ -89,7 +89,8 @@ class CLog {
             }
         }
         if ($call == null) {
-            if (function_exists("xdebug_time_index")) {
+            $xdebugDevelop = function_exists('xdebug_call_class') && strpos((string)ini_get('xdebug.mode'), 'develop') !== false;
+            if ($xdebugDevelop) {
                 $call = "[" . xdebug_call_class() . "->" . xdebug_call_function() . "::Line " . xdebug_call_line() . "] ";
             } else {
                 $call = "";
@@ -168,7 +169,7 @@ class CLog {
             self::$soapClientLogger->debugMsg = $message;
 
             self::$soapClient->WriteClientLog(self::$soapClientLogger);
-        } catch (SoapFault $e) {
+        } catch (\SoapFault $e) {
             print ($e);
         }
     }
@@ -203,7 +204,8 @@ class CLog {
         if (SP_CORE_LOG_FILE && ($_SERVER["REMOTE_ADDR"] != "10.10.144.14")) {
             $datei = fopen(SP_CORE_DEBUG_LOGFILE_PATH, "a");
 
-            if (function_exists("xdebug_time_index")) {
+            $xdebugDevelop = function_exists('xdebug_time_index') && strpos((string)ini_get('xdebug.mode'), 'develop') !== false;
+            if ($xdebugDevelop) {
                 fputs($datei, date("[" . $_SERVER["REMOTE_ADDR"] . "][d/m/Y H:i:s] ", time()) . "\t\t----------------------------------------------------------\r\n");
                 fputs($datei, date("[" . $_SERVER["REMOTE_ADDR"] . "][d/m/Y H:i:s] ", time()) . "\t\t#++++ [NEW SIDE CLICK ] -----------------------\r\n");
                 fputs($datei, date("[" . $_SERVER["REMOTE_ADDR"] . "][d/m/Y H:i:s] ", time()) . "\t\t#++++ Modul\t\t: " . (isset($requestVar['modul']) ? $requestVar['modul'] : "No modul call") . " \r\n");
@@ -223,7 +225,8 @@ class CLog {
         if (SP_CORE_LOG_WEB) {
             //echo '<div id="sp_console" style="position:fixed;bottom:0;width:100%;height:20%;overflow:auto;background: #383f38;box-shadow: inset 0 4px 8px #222; padding: 10px 10px; line-height: 18px; font-size: 11px; color:#efe;border-top:2px solid #ccc;z-index:10;">';
             echo '<div id="sp_console_button">&#x3c;&#x3c;click&#x3e;&#x3e; view debugging log</div><div id="sp_console">';
-            if (function_exists("xdebug_time_index")) {
+            $xdebugDevelop = function_exists('xdebug_time_index') && strpos((string)ini_get('xdebug.mode'), 'develop') !== false;
+            if ($xdebugDevelop) {
                 echo date("[" . $_SERVER["REMOTE_ADDR"] . "][d/m/Y H:i:s] ", time()) . "\t\t----------------------------------------------------------<br>";
                 echo date("[" . $_SERVER["REMOTE_ADDR"] . "][d/m/Y H:i:s] ", time()) . "\t\t#++++ [NEW SIDE CLICK ] -----------------------<br>";
                 echo date("[" . $_SERVER["REMOTE_ADDR"] . "][d/m/Y H:i:s] ", time()) . "\t\t#++++ Modul\t\t: " . (isset($requestVar['modul']) ? $requestVar['modul'] : "No modul call") . " <br>";

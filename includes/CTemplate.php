@@ -242,7 +242,7 @@ final class CTemplate {
      * @param $text
      * @return unknown_type
      */
-    public function makeOptionTag($value = "", $text, $selected = 0) {
+    public function makeOptionTag($value = "", $text = "", $selected = 0) {
         return "<option value=\"" . $value . "\" " . ($selected == 1 ? "selected=\"selected\"" : "") . ">" . $text . "</option>\n";
     }
 
@@ -321,9 +321,17 @@ final class CTemplate {
      */
     public function loadModulTemplateXML($modulName, $fileName) {
         if ($modulName == "systemCore") {
-            $xml = utf8_decode(file_get_contents(SP_CORE_DOC_ROOT . "/" . SP_CORE_TEMPLATE_PATH . "/" . $fileName . ".tpl.php"));
+            $xmlRaw = file_get_contents(SP_CORE_DOC_ROOT . "/" . SP_CORE_TEMPLATE_PATH . "/" . $fileName . ".tpl.php");
         } else {
-            $xml = utf8_decode(file_get_contents(SP_CORE_DOC_ROOT . '/module/' . $modulName . '/template/' . $modulName . '_' . $fileName . '.tpl.php'));
+            $xmlRaw = file_get_contents(SP_CORE_DOC_ROOT . '/module/' . $modulName . '/template/' . $modulName . '_' . $fileName . '.tpl.php');
+        }
+        // Replace deprecated utf8_decode(): convert from UTF-8 to ISO-8859-1 if needed, otherwise keep as-is
+        if (function_exists('mb_convert_encoding')) {
+            $xml = mb_convert_encoding($xmlRaw, 'ISO-8859-1', 'UTF-8');
+        } elseif (function_exists('iconv')) {
+            $xml = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $xmlRaw);
+        } else {
+            $xml = $xmlRaw;
         }
         try {
             libxml_use_internal_errors(true);
@@ -344,9 +352,17 @@ final class CTemplate {
 
     public function loadAdminModulTemplateXML($modulName, $fileName) {
         if ($modulName == "systemCore") {
-            $xml = utf8_decode(file_get_contents(SP_CORE_DOC_ROOT . "/" . SP_CORE_TEMPLATE_PATH . "/admin/a_" . $fileName . ".tpl.php"));
+            $xmlRaw = file_get_contents(SP_CORE_DOC_ROOT . "/" . SP_CORE_TEMPLATE_PATH . "/admin/a_" . $fileName . ".tpl.php");
         } else {
-            $xml = utf8_decode(file_get_contents(SP_CORE_DOC_ROOT . '/module/' . $modulName . '/template/admin/a_' . $modulName . '_' . $fileName . '.tpl.php'));
+            $xmlRaw = file_get_contents(SP_CORE_DOC_ROOT . '/module/' . $modulName . '/template/admin/a_' . $modulName . '_' . $fileName . '.tpl.php');
+        }
+        // Replace deprecated utf8_decode(): convert from UTF-8 to ISO-8859-1 if needed, otherwise keep as-is
+        if (function_exists('mb_convert_encoding')) {
+            $xml = mb_convert_encoding($xmlRaw, 'ISO-8859-1', 'UTF-8');
+        } elseif (function_exists('iconv')) {
+            $xml = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $xmlRaw);
+        } else {
+            $xml = $xmlRaw;
         }
         try {
             libxml_use_internal_errors(true);

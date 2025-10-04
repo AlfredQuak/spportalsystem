@@ -62,17 +62,18 @@ final class CDatabase {
      * */
     public function __construct() {
         try {
-            $this->connection = @mysql_connect(SP_CORE_DB_SERVER, SP_CORE_DB_USER, SP_CORE_DB_PASS);
+            // Initialize mysqli connection (PHP 8+ compatible)
+            $this->connection = \mysqli_connect(SP_CORE_DB_SERVER, SP_CORE_DB_USER, SP_CORE_DB_PASS, SP_CORE_DB_DATABASE);
 
             if (!$this->connection) {
-                CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, mysql_error());
-                return false;
-            } elseif (!mysql_select_db(SP_CORE_DB_DATABASE, $this->connection)) {
-                CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, mysql_error());
+                CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, \mysqli_connect_error());
                 return false;
             }
-            mysql_set_charset(SP_CORE_ENCODING, $this->connection);
-        } catch (Exception $e) {
+            // Set charset
+            if (!\mysqli_set_charset($this->connection, SP_CORE_ENCODING)) {
+                CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, \mysqli_error($this->connection));
+            }
+        } catch (\Exception $e) {
             CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, $e->getMessage());
         }
     }
@@ -83,18 +84,18 @@ final class CDatabase {
 
     public function fetch_array($result, $option = null) {
         if ($option != null) {
-            return @mysql_fetch_array($result, $option);
+            return \mysqli_fetch_array($result, $option);
         } else {
-            return @mysql_fetch_array($result);
+            return \mysqli_fetch_array($result);
         }
     }
 
     public function fetch_object($result) {
-        return mysql_fetch_object($result);
+        return \mysqli_fetch_object($result);
     }
 
     public function fetch_assoc($result) {
-        return mysql_fetch_assoc($result);
+        return \mysqli_fetch_assoc($result);
     }
 
     public function query($query, $logging = true) {
@@ -106,7 +107,7 @@ final class CDatabase {
             }
         }
 
-        $result = @mysql_query($query);
+        $result = \mysqli_query($this->connection, $query);
         if (!$result && $logging) {
             if (function_exists("xdebug_time_index")) {
                 CLog::getInstance()->log(SP_LOG_ERROR, null, __CLASS__ . "::" . __FUNCTION__, xdebug_call_class() . "->" . xdebug_call_function() . "::Line " . xdebug_call_line(), null, $this->getError());
@@ -118,23 +119,15 @@ final class CDatabase {
     }
 
     public function num_rows($result) {
-        return mysql_num_rows($result);
+        return \mysqli_num_rows($result);
     }
 
     public function checkValue($query) {
-        if (get_magic_quotes_gpc()) {
-            if (function_exists("mysql_real_escape_string")) {
-                return mysql_real_escape_string(stripslashes($query));
-            } else {
-                return $query;
-            }
-        } else {
-            if (function_exists("mysql_real_escape_string")) {
-                return mysql_real_escape_string($query);
-            } else {
-                return addslashes($query);
-            }
+        // Always escape using mysqli; magic_quotes_gpc removed in PHP 8
+        if (function_exists('mysqli_real_escape_string') && $this->connection) {
+            return \mysqli_real_escape_string($this->connection, (string)$query);
         }
+        return addslashes((string)$query);
     }
 
     /**
@@ -168,17 +161,18 @@ final class CDatabase {
     }
 
     public function insert_id() {
-        return mysql_insert_id();
+        return \mysqli_insert_id($this->connection);
     }
 
     public function getError() {
-        CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, "" . mysql_errno() . " : " . mysql_error());
-        return "" . mysql_errno() . " : " . mysql_error();
+        $err = \mysqli_errno($this->connection) . " : " . \mysqli_error($this->connection);
+        CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, $err);
+        return $err;
     }
 
     function __destruct() {
         if ($this->connection != null) {
-            @mysql_close($this->connection);
+            \mysqli_close($this->connection);
         }
     }
 
