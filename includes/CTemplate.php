@@ -1065,5 +1065,3 @@ final class CTemplate {
     }
 
 }
-
-?>

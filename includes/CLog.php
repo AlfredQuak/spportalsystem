@@ -26,13 +26,13 @@ require_once 'CHelper.php';
 
 class WriteLog {
 
-    var $FunctionLvl = 1;
-    var $usrLvl = 1;
-    var $ip;
-    var $callerMtd = "tescht";
-    var $debugInf = "1";
-    var $debugUsr = "1";
-    var $debugMsg = "1";
+    public $FunctionLvl = 1;
+    public $usrLvl = 1;
+    public $ip;
+    public $callerMtd = "tescht";
+    public $debugInf = "1";
+    public $debugUsr = "1";
+    public $debugMsg = "1";
 
 }
 
@@ -198,7 +198,7 @@ class CLog {
         self::$stringWrite[] = $fontCol . " : *#*user:" . $user . "*#*function: " . $function . "*#*call:" . $call . "*#*msg: " . $message . "\r\n";
     }
 
-    function __destruct() {
+    public function __destruct() {
         $requestVar = CHelper::getInstance()->getRequestVar();
 
         if (SP_CORE_LOG_FILE && ($_SERVER["REMOTE_ADDR"] != "10.10.144.14")) {
@@ -246,5 +246,3 @@ class CLog {
     }
 
 }
-
-?>

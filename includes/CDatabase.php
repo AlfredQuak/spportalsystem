@@ -188,12 +188,10 @@ final class CDatabase {
         return $err;
     }
 
-    function __destruct() {
+    public function __destruct() {
         if ($this->connection && (\is_object($this->connection) || $this->connection instanceof \mysqli)) {
             \mysqli_close($this->connection);
         }
     }
 
 }
-
-?>

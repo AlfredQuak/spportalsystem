@@ -333,5 +333,3 @@ final class CSession {
     }
 
 }
-
-?>

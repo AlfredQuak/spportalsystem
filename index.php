@@ -149,4 +149,3 @@ if (!file_exists('config.inc.php')) {
         }
     }
 }
-?>
