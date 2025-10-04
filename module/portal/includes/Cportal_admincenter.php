@@ -310,8 +310,8 @@ class Cportal_admincenter {
 
     private function clearForURLRewrite($content) {
         if (SP_PORTAL_SYSTEM_URL_REWRITE === true) {
-            $content = preg_replace_callback("!<a href=(.*?)modul=portal&amp;action=CMS&amp;page=([0-9]+)&amp;sub=([0-9]+),([0-9]+)!", 'self::clearoldUrl', $content);
-            $content = preg_replace_callback("!<a href=(.*?)modul=portal\&action=CMS\&page=([0-9]+)\&sub=([0-9]+),([0-9]+)!", 'self::clearoldUrl', $content);
+            $content = preg_replace_callback("!<a href=(.*?)modul=portal&amp;action=CMS&amp;page=([0-9]+)&amp;sub=([0-9]+),([0-9]+)!", [$this, 'clearoldUrl'], $content);
+            $content = preg_replace_callback("!<a href=(.*?)modul=portal\&action=CMS\&page=([0-9]+)\&sub=([0-9]+),([0-9]+)!", [$this, 'clearoldUrl'], $content);
         }
         return $content;
     }
