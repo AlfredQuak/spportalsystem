@@ -448,7 +448,7 @@ final class CTemplate {
         $box_out = str_replace('{BOX_TITEL}', $titel, $box_out);
         $box_out = str_replace('{BOX_CONTENT}', self::checkThirdPartyScripts($content), $box_out);
         $box_out = str_replace('{BOX_ALIGN}', $aling, $box_out);
-        $box_out = str_replace('{BOX_TD_WIDTH}', $w, $box_out);
+        $box_out = str_replace('{BOX_TD_WIDTH}', $w ?? '', $box_out);
 
         if ($pos != null) {
             $this->contentBoxes[$pos] = $box_out;
@@ -476,7 +476,7 @@ final class CTemplate {
         $box_out = str_replace('{BOX_TITEL}', $titel, $this->templateContentBox);
         $box_out = str_replace('{BOX_CONTENT}', self::checkThirdPartyScripts($content), $box_out);
         $box_out = str_replace('{BOX_ALIGN}', $aling, $box_out);
-        $box_out = str_replace('{BOX_TD_WIDTH}', $w, $box_out);
+        $box_out = str_replace('{BOX_TD_WIDTH}', $w ?? '', $box_out);
 
         if ($pos != null) {
             $this->contentBoxes[$pos] = $box_out;
@@ -728,11 +728,11 @@ final class CTemplate {
 
     public function checkThirdPartyScripts($string) {
         if ($this->renderExtensionEdit) {
-            $string = preg_replace_callback("'\{modul_cont::([a-z]+)}'", 'self::myReplaceModul_cont', $string);
-            $string = preg_replace_callback("'\{modul_nav::([a-z]+)}'", 'self::myReplaceModul_nav', $string);
-            $string = preg_replace_callback("'\{modul_func::(.*)::(.*)\((.*)\)}'", 'self::myReplaceModul_func', $string);
-            $string = preg_replace_callback("'\{template::([a-z]+)}'", 'self::myReplaceTemplate', $string);
-            $string = preg_replace_callback("'\{thirdPT::([a-z]+)}'", 'self::myReplace', $string);
+            $string = preg_replace_callback("'\{modul_cont::([a-z]+)}'", [$this, 'myReplaceModul_cont'], $string);
+            $string = preg_replace_callback("'\{modul_nav::([a-z]+)}'", [$this, 'myReplaceModul_nav'], $string);
+            $string = preg_replace_callback("'\{modul_func::(.*)::(.*)\((.*)\)}'", [$this, 'myReplaceModul_func'], $string);
+            $string = preg_replace_callback("'\{template::([a-z]+)}'", [$this, 'myReplaceTemplate'], $string);
+            $string = preg_replace_callback("'\{thirdPT::([a-z]+)}'", [$this, 'myReplace'], $string);
         }
         return $string;
     }
@@ -745,9 +745,9 @@ final class CTemplate {
      * @return string
      */
     public function getRenderdSite() {
-        $boxContent = null;
-        $boxright = null;
-        $boxLeft = null;
+        $boxContent = '';
+        $boxright = '';
+        $boxLeft = '';
 
         if ($this->noTemplate == true) {
             return "";
