@@ -59,9 +59,14 @@ final class CSession {
      */
     protected function __construct() {
         if (self::$instance == null) {
-            session_start();
-            $sql = "DELETE FROM sp_session WHERE session_time < " . ((time() + 5) - (15 * 60));
-            CDatabase::getInstance()->query($sql);
+            if (session_id() == "") {
+                session_start();
+            }
+            // Only attempt DB cleanup if the database connection is available
+            if (CDatabase::getInstance()->getConnection() !== false) {
+                $sql = "DELETE FROM sp_session WHERE session_time < " . ((time() + 5) - (15 * 60));
+                CDatabase::getInstance()->query($sql);
+            }
         } else {
             if (session_id() == "") {
                 session_start();

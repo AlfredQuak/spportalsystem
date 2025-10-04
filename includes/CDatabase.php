@@ -41,7 +41,7 @@ final class CDatabase {
         
     }
 
-    private $connection = null;
+    private $connection = false;
 
     /**
      * /brief give class instance
@@ -66,14 +66,17 @@ final class CDatabase {
             $this->connection = \mysqli_connect(SP_CORE_DB_SERVER, SP_CORE_DB_USER, SP_CORE_DB_PASS, SP_CORE_DB_DATABASE);
 
             if (!$this->connection) {
+                // Ensure connection is a strict boolean false so callers can use === false checks
+                $this->connection = false;
                 CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, \mysqli_connect_error());
-                return false;
+                return;
             }
             // Set charset
             if (!\mysqli_set_charset($this->connection, SP_CORE_ENCODING)) {
                 CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, \mysqli_error($this->connection));
             }
         } catch (\Exception $e) {
+            $this->connection = false;
             CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, $e->getMessage());
         }
     }
@@ -105,6 +108,17 @@ final class CDatabase {
             } else {
                 CLog::getInstance()->log(SP_LOG_DEBUG, SP_LOG_DEBUG, __CLASS__ . "::" . __FUNCTION__, null, null, $query);
             }
+        }
+
+        if (!$this->connection) {
+            if ($logging) {
+                if (function_exists("xdebug_time_index")) {
+                    CLog::getInstance()->log(SP_LOG_ERROR, null, __CLASS__ . "::" . __FUNCTION__, xdebug_call_class() . "->" . xdebug_call_function() . "::Line " . xdebug_call_line(), null, "No database connection");
+                } else {
+                    CLog::getInstance()->log(SP_LOG_ERROR, null, __CLASS__ . "::" . __FUNCTION__, null, null, "No database connection");
+                }
+            }
+            return null;
         }
 
         $result = \mysqli_query($this->connection, $query);
@@ -165,13 +179,17 @@ final class CDatabase {
     }
 
     public function getError() {
-        $err = \mysqli_errno($this->connection) . " : " . \mysqli_error($this->connection);
+        if ($this->connection) {
+            $err = \mysqli_errno($this->connection) . " : " . \mysqli_error($this->connection);
+        } else {
+            $err = "No database connection";
+        }
         CLog::getInstance()->log(SP_LOG_ERROR, SP_LOG_ERROR, __CLASS__ . "::" . __FUNCTION__, null, null, $err);
         return $err;
     }
 
     function __destruct() {
-        if ($this->connection != null) {
+        if ($this->connection && (\is_object($this->connection) || $this->connection instanceof \mysqli)) {
             \mysqli_close($this->connection);
         }
     }
